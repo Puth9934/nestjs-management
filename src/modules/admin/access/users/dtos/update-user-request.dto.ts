@@ -24,6 +24,13 @@ export class UpdateUserRequestDto {
   })
   lastName: string;
 
+  @IsNotEmpty()
+  @MaxLength(100)
+  @ApiProperty({
+    example:'ABA',
+  })
+  company: string;
+
   @ApiProperty({ example: [1, 2] })
   @ArrayNotEmpty()
   @IsArray()
@@ -41,4 +48,10 @@ export class UpdateUserRequestDto {
     example: UserStatus.Active,
   })
   status: UserStatus;
+
+  @MaxLength(100)
+  @ApiProperty({
+    example: 'Manager',
+  })
+  approveBy : string;
 }

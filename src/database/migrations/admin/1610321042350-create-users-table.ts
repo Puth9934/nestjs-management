@@ -2,6 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 import { commonFields } from '../common.fields';
 
 const tableName = 'admin.users';
+
 export class createUsersTable1610321042350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -41,6 +42,11 @@ export class createUsersTable1610321042350 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'company',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
             name: 'is_super_user',
             type: 'boolean',
             isNullable: false,
@@ -51,6 +57,21 @@ export class createUsersTable1610321042350 implements MigrationInterface {
             type: 'user_status',
             isNullable: false,
           },
+          {
+            name: 'approveBy',
+            type: 'varchar',
+            isNullable: true,
+          },
+          // {
+          //   name: 'isApproved',
+          //   type:'boolean',
+          //   isNullable: false,
+          // },
+          // {
+          //   name: 'parentId',
+          //   type: 'boolean',
+          //   isNullable: false,
+          // },
           ...commonFields,
         ],
       }),

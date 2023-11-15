@@ -14,8 +14,10 @@ export class UserMapper {
     dto.username = entity.username;
     dto.firstName = entity.firstName;
     dto.lastName = entity.lastName;
+    dto.company = entity.company;
     dto.status = entity.status;
     dto.isSuperUser = entity.isSuperUser;
+    dto.approvedBy = entity.approveBy;
     return dto;
   }
 
@@ -26,10 +28,12 @@ export class UserMapper {
     dto.username = entity.username;
     dto.firstName = entity.firstName;
     dto.lastName = entity.lastName;
+    dto.company = entity.company;
     dto.permissions = await Promise.all((await entity.permissions).map(PermissionMapper.toDto));
     dto.roles = await Promise.all((await entity.roles).map(RoleMapper.toDtoWithRelations));
     dto.isSuperUser = entity.isSuperUser;
     dto.status = entity.status;
+    dto.approvedBy = entity.approveBy;
     return dto;
   }
 
@@ -38,11 +42,13 @@ export class UserMapper {
     entity.username = dto.username;
     entity.firstName = dto.firstName;
     entity.lastName = dto.lastName;
+    entity.company = dto.company;
     entity.password = dto.password;
     entity.permissions = Promise.resolve(dto.permissions.map((id) => new PermissionEntity({ id })));
     entity.roles = Promise.resolve(dto.roles.map((id) => new RoleEntity({ id })));
-    entity.status = UserStatus.Active;
+    entity.status = UserStatus.Inactive;
     entity.isSuperUser = false;
+    entity.approveBy = dto.approveBy;
     return entity;
   }
 
@@ -50,9 +56,11 @@ export class UserMapper {
     entity.username = dto.username;
     entity.firstName = dto.firstName;
     entity.lastName = dto.lastName;
+    entity.company = dto.company;
     entity.permissions = Promise.resolve(dto.permissions.map((id) => new PermissionEntity({ id })));
     entity.roles = Promise.resolve(dto.roles.map((id) => new RoleEntity({ id })));
     entity.status = dto.status;
+    entity.approveBy = dto.approveBy;
     return entity;
   }
 }

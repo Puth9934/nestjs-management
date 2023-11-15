@@ -11,9 +11,13 @@ const users = [
   {
     firstName: 'Admin',
     lastName: 'Admin',
+    company: 'BMW',
     password: 'Hello123',
     username: 'Admin',
     isSuperUser: true,
+    approveBy : 'Manager',
+    // isApproved: true,
+    // parentId: true,
     status: UserStatus.Active,
   },
 ];
@@ -34,6 +38,9 @@ const rolePermissions = {
       slug: 'admin.access.permissions.update',
       description: 'Update permissions',
     },
+    { slug: 'admin.acccess.company.read', description: 'read company' },
+    { slug: 'admin.acccess.company.create', description:'create company'},
+    { slug: 'admin.acccess.company.update', description:'update company'},
   ],
   Admin: [
     { slug: 'admin.access.users.read', description: 'Read users' },
@@ -42,6 +49,9 @@ const rolePermissions = {
     { slug: 'admin.access.roles.read', description: 'Read Roles' },
     { slug: 'admin.access.roles.create', description: 'Create Roles' },
     { slug: 'admin.access.roles.update', description: 'Update Roles' },
+    { slug: 'admin.access.company.read', description: 'read company' },
+    { slug: 'admin.access.company.create', description: 'create company'},
+    { slug: 'admin.access.company.update', description: 'update company'},
   ],
 };
 
@@ -91,4 +101,16 @@ export default class CreateUsersSeed implements Seeder {
     );
     await connection.manager.save(entities);
   }
+  //   //Creating company
+  //   const entities = await Promise.all(
+  //     company.map(async (u) => {
+  //       const roles = Promise.resolve(savedRoles);
+  //       const password = await HashHelper.encrypt(u.password);
+  //       const user = new UserEntity({ ...u, password, roles });
+  //       return user;
+  //     }),
+  //   );
+  //   await connection.manager.save(entities);
+  // }
+   
 }

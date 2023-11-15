@@ -33,6 +33,14 @@ export class UserEntity extends BaseEntity {
   lastName: string;
 
   @Column({
+    name: 'company',
+    type: 'varchar',
+    length: 100,
+    nullable : false,
+  })
+  company: string;
+
+  @Column({
     name: 'password',
     type: 'varchar',
     nullable: false,
@@ -54,6 +62,28 @@ export class UserEntity extends BaseEntity {
     nullable: false,
   })
   status: UserStatus;
+
+  @Column({
+    name: 'approveBy',
+    type: 'varchar',
+    nullable: false,
+  })
+  approveBy: string;
+
+  // @Column({
+  //   name: 'isApproved',
+  //   type: 'boolean',
+  //   nullable: false,
+  // })
+  // isApproved: boolean;
+
+  // @Column({
+  //   name: 'parentId',
+  //   type: 'boolean',
+  //   nullable: false,
+  // })
+  // parentId: boolean;
+
 
   @ManyToMany(() => RoleEntity, (role) => role.id, {
     lazy: true,
