@@ -1,17 +1,17 @@
 import { PaginationRequest } from '@libs/pagination';
 import { EntityRepository, Repository } from 'typeorm';
-import { CompanyEntity } from './company.entity';
+import { UserEntity } from './user.entity';
 
-@EntityRepository(CompanyEntity)
-export class CompanyRepository extends Repository<CompanyEntity> {
-  /**
+@EntityRepository(UserEntity)
+export class RigisterRepository extends Repository<UserEntity> {
+  /*
    * Get users list
    * @param pagination {PaginationRequest}
-   * @returns [userEntities: CompanyEntity[], totalUsers: number]
+   * @returns [userEntities: UserEntity[], totalUsers: number]
    */
   public async getUsersAndCount(
     pagination: PaginationRequest,
-  ): Promise<[userEntities: CompanyEntity[], totalUsers: number]> {
+  ): Promise<[userEntities: UserEntity[], totalUsers: number]> {
     const {
       skip,
       limit: take,
@@ -44,7 +44,7 @@ export class CompanyRepository extends Repository<CompanyEntity> {
    * @param username {string}
    * @returns Promise<UserEntity>
    */
-  async findUserByUsername(username: string): Promise<CompanyEntity> {
+  async findUserByUsername(username: string): Promise<UserEntity> {
     return this.createQueryBuilder('u')
       .leftJoinAndSelect('u.roles', 'r', 'r.active = true')
       .leftJoinAndSelect('r.permissions', 'rp', 'rp.active = true')

@@ -6,8 +6,8 @@ import { CreateUserRequestDto, UserResponseDto, UpdateUserRequestDto } from './d
 import { UserStatus } from './user-status.enum';
 import { UserEntity } from './user.entity';
 
-export class UserMapper {
-  public static async toDto(entity: UserEntity): Promise<UserResponseDto> {
+export class RigisterMapper {
+  public static async tooDto(entity: UserEntity): Promise<UserResponseDto> {
     const dto = new UserResponseDto();
 
     dto.id = entity.id;
@@ -21,7 +21,7 @@ export class UserMapper {
     return dto;
   }
 
-  public static async toDtoWithRelations(entity: UserEntity): Promise<UserResponseDto> {
+  public static async tooDtoWithRelations(entity: UserEntity): Promise<UserResponseDto> {
     const dto = new UserResponseDto();
 
     dto.id = entity.id;
@@ -37,7 +37,7 @@ export class UserMapper {
     return dto;
   }
 
-  public static toCreateEntity(dto: CreateUserRequestDto): UserEntity {
+  public static tooCreateEntity(dto: CreateUserRequestDto): UserEntity {
     const entity = new UserEntity();
     entity.username = dto.username;
     entity.firstName = dto.firstName;
@@ -46,7 +46,7 @@ export class UserMapper {
     entity.password = dto.password;
     entity.permissions = Promise.resolve(dto.permissions.map((id) => new PermissionEntity({ id })));
     entity.roles = Promise.resolve(dto.roles.map((id) => new RoleEntity({ id })));
-    entity.status = UserStatus.Inactive;
+    entity.status = UserStatus.Blocked;
     entity.isSuperUser = false;
     entity.approveBy = dto.approveBy;
     return entity;
@@ -66,7 +66,7 @@ export class UserMapper {
   //   return entity;
   // }
 
-  public static toUpdateEntity(entity: UserEntity, dto: UpdateUserRequestDto): UserEntity {
+  public static tooUpdateEntity(entity: UserEntity, dto: UpdateUserRequestDto): UserEntity {
     entity.username = dto.username;
     entity.firstName = dto.firstName;
     entity.lastName = dto.lastName;

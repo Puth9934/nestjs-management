@@ -5,24 +5,32 @@ import { UserStatus } from '../../modules/admin/access/users/user-status.enum';
 import { UserEntity } from '../../modules/admin/access/users/user.entity';
 import { RoleEntity } from '../../modules/admin/access/roles/role.entity';
 import { PermissionEntity } from '../../modules/admin/access/permissions/permission.entity';
+import { CompanyEntity } from '@modules/admin/access/company/company.entity';
 import { HashHelper } from '../../helpers';
 
 const users = [
   {
-    firstName: 'Admin',
-    lastName: 'Admin',
+    firstName: 'Manager',
+    lastName: 'Manager',
     company: 'BMW',
     password: 'Hello123',
-    username: 'Admin',
+    username: 'Manager',
     isSuperUser: true,
     approveBy : 'Manager',
-    // isApproved: true,
-    // parentId: true,
     status: UserStatus.Active,
   },
 ];
+// const company= [
+//   {
+//   companyName: "BMW",
+//   companyLogo: "Jpg.png",
+//   companyDescription: "string",
+//   companyService: "string",
+//   companyAddress: "Phnom Penh",
+//   },
+// ];
 const rolePermissions = {
-  Developer: [
+  Manager: [
     { slug: 'admin.access.users.read', description: 'Read users' },
     { slug: 'admin.access.users.create', description: 'Create users' },
     { slug: 'admin.access.users.update', description: 'Update users' },
@@ -38,9 +46,9 @@ const rolePermissions = {
       slug: 'admin.access.permissions.update',
       description: 'Update permissions',
     },
-    { slug: 'admin.acccess.company.read', description: 'read company' },
-    { slug: 'admin.acccess.company.create', description:'create company'},
-    { slug: 'admin.acccess.company.update', description:'update company'},
+    { slug: 'admin.access.company.read', description: 'read company' },
+    { slug: 'admin.access.company.create', description:'create company'},
+    { slug: 'admin.access.company.update', description:'update company'},
   ],
   Admin: [
     { slug: 'admin.access.users.read', description: 'Read users' },
@@ -50,10 +58,20 @@ const rolePermissions = {
     { slug: 'admin.access.roles.create', description: 'Create Roles' },
     { slug: 'admin.access.roles.update', description: 'Update Roles' },
     { slug: 'admin.access.company.read', description: 'read company' },
-    { slug: 'admin.access.company.create', description: 'create company'},
-    { slug: 'admin.access.company.update', description: 'update company'},
+  ],
+  HR: [
+    { slug: 'admin.access.users.read', description: 'Read users' },
+    { slug: 'admin.access.users.update', description: 'Update users' },
+    { slug: 'admin.access.roles.read', description: 'Read Roles' },
+    { slug: 'admin.access.company.read', description: 'read company' },
+  ],
+  Stuff: [
+    { slug: 'admin.access.users.read', description: 'Read users' },
+    { slug: 'admin.access.roles.read', description: 'Read Roles' },
+    { slug: 'admin.access.company.read', description: 'read company' },
   ],
 };
+
 
 export default class CreateUsersSeed implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
@@ -90,6 +108,7 @@ export default class CreateUsersSeed implements Seeder {
       return new RoleEntity({ name, permissions });
     });
     const savedRoles = await connection.manager.save(roles);
+    
     //Creating users
     const entities = await Promise.all(
       users.map(async (u) => {
@@ -100,17 +119,17 @@ export default class CreateUsersSeed implements Seeder {
       }),
     );
     await connection.manager.save(entities);
-  }
+
   //   //Creating company
-  //   const entities = await Promise.all(
-  //     company.map(async (u) => {
-  //       const roles = Promise.resolve(savedRoles);
-  //       const password = await HashHelper.encrypt(u.password);
-  //       const user = new UserEntity({ ...u, password, roles });
-  //       return user;
+  //   const Company = await Promise.all(
+  //     company.map(async(c) => {        
+  //       // const password = await HashHelper.encrypt(u.password);
+  //       // const company = new CompanyEntity({ ...c });
+  //       return company;
   //     }),
   //   );
-  //   await connection.manager.save(entities);
+    
+  //   await connection.manager.save(Company);
   // }
    
-}
+}}

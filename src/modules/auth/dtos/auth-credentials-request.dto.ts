@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 export class AuthCredentialsRequestDto {
   @IsNotEmpty()
   @ApiProperty({
-    example: 'jDoe',
+    example: 'Manager',
   })
   readonly username: string;
 

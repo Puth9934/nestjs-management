@@ -2,9 +2,7 @@ import {MigrationInterface, QueryRunner, Table} from "typeorm";
 import { commonFields } from '../common.fields';
 
 
-const tableName = 'admin.company',
-usersTableName = 'admin.users',
-companyTableName = 'admin.company';
+const tableName = 'admin.company'
 export class createCompanyTable1699600710385 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
@@ -23,7 +21,7 @@ export class createCompanyTable1699600710385 implements MigrationInterface {
                     name: 'companyName',
                     type: 'varchar',
                     length: '20',
-                    isUnique: true,
+                    // isUnique: true,
                     isNullable: false,
                   },
                   {
@@ -33,7 +31,7 @@ export class createCompanyTable1699600710385 implements MigrationInterface {
                     isNullable: false,
                   },
                   {
-                    name: 'Description',
+                    name: 'companyDescription',
                     type: 'varchar',
                     length: '100',
                     isNullable: false,

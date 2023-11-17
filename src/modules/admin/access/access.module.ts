@@ -3,8 +3,9 @@ import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { UsersModule } from './users/users.module';
 import { companyModule } from './company/company.module';
+import { RigisterModule } from './users copy/users.module'
 
 @Module({
-  imports: [RolesModule, PermissionsModule, UsersModule ,companyModule],
+  imports: [RolesModule, PermissionsModule, UsersModule ,companyModule,RigisterModule],
 })
 export class AccessModule {}

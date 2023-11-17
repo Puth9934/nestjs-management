@@ -1,4 +1,4 @@
-import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { CreateDateColumn, UpdateDateColumn , DeleteDateColumn } from 'typeorm';
 
 export abstract class BaseEntity {
   @CreateDateColumn({
@@ -18,4 +18,13 @@ export abstract class BaseEntity {
     nullable: false,
   })
   updatedAt: Date;
+// 
+  // @DeleteDateColumn({
+  //   name: 'updated_at',
+  //   type: 'timestamp with time zone',
+  //   default: 'now()',
+  //   onUpdate: 'now()',
+  //   nullable: false,
+  // })
+  // deleteAt: Date;
 }

@@ -55,25 +55,25 @@ export class CompanyEntity extends BaseEntity {
   //   super();
   //   Object.assign(this, permission);
   
-  @ManyToMany(() => PermissionEntity, (permission) => permission.id, {
-    lazy: true,
-    cascade: true,
-  })
-  @JoinTable({
-    name: 'company_permissions',
-    joinColumn: {
-      name: 'company_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'permission_id',
-      referencedColumnName: 'id',
-    },
-  })
-  permissions: Promise<PermissionEntity[]>;
+  // @ManyToMany(() => PermissionEntity, (permission) => permission.id, {
+  //   lazy: true,
+  //   cascade: true,
+  // })
+  // @JoinTable({
+  //   name: 'company_permissions',
+  //   joinColumn: {
+  //     name: 'company_id',
+  //     referencedColumnName: 'id',
+  //   },
+  //   inverseJoinColumn: {
+  //     name: 'permission_id',
+  //     referencedColumnName: 'id',
+  //   },
+  // })
+  // permissions: Promise<PermissionEntity[]>;
 
-  constructor(company?: Partial<CompanyEntity>) {
-    super();
-    Object.assign(this, company);
-  }
+  // constructor(company?: Partial<CompanyEntity>) {
+  //   super();
+  //   Object.assign(this, company);
+  // }
 }

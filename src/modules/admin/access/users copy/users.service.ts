@@ -6,18 +6,18 @@ import {
   UserExistsException,
 } from '@common/http/exceptions';
 import { Pagination, PaginationRequest, PaginationResponseDto } from '@libs/pagination';
-import { UsersRepository } from './users.repository';
+import { RigisterRepository } from './users.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DBErrorCode } from '@common/enums';
-import { UserMapper } from './users.mapper';
+import { RigisterMapper } from './users.mapper';
 import { HashHelper } from '@helpers';
 import { TimeoutError } from 'rxjs';
 
 @Injectable()
-export class UsersService {
+export class RigisterService {
   constructor(
-    @InjectRepository(UsersRepository)
-    private usersRepository: UsersRepository,
+    @InjectRepository(RigisterRepository)
+    private rigisterRepository: RigisterRepository,
   ) {}
 
   /**
@@ -27,9 +27,9 @@ export class UsersService {
    */
   public async getUsers(pagination: PaginationRequest): Promise<PaginationResponseDto<UserResponseDto>> {
     try {
-      const [userEntities, totalUsers] = await this.usersRepository.getUsersAndCount(pagination);
+      const [userEntities, totalUsers] = await this.rigisterRepository.getUsersAndCount(pagination);
 
-      const UserDtos = await Promise.all(userEntities.map(UserMapper.toDtoWithRelations));
+      const UserDtos = await Promise.all(userEntities.map(RigisterMapper.tooDtoWithRelations));
       return Pagination.of(pagination, totalUsers, UserDtos);
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -49,14 +49,14 @@ export class UsersService {
    * @returns {Promise<UserResponseDto>}
    */
   public async getUserById(id: string): Promise<UserResponseDto> {
-    const userEntity = await this.usersRepository.findOne(id, {
+    const userEntity = await this.rigisterRepository.findOne(id, {
       relations: ['permissions', 'roles'],
     });
     if (!userEntity) {
       throw new NotFoundException();
     }
 
-    return UserMapper.toDtoWithRelations(userEntity);
+    return RigisterMapper.tooDtoWithRelations(userEntity);
   }
 
 
@@ -68,10 +68,10 @@ export class UsersService {
    */
 public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto> {
   try {
-    let userEntity = UserMapper.toCreateEntity(userDto);
+    let userEntity = RigisterMapper.tooCreateEntity(userDto);
     userEntity.password = await HashHelper.encrypt(userEntity.password);
-    userEntity = await this.usersRepository.save(userEntity);
-    return UserMapper.toDto(userEntity);
+    userEntity = await this.rigisterRepository.save(userEntity);
+    return RigisterMapper.tooDto(userEntity);
   } catch (error) {
     if (error.code == DBErrorCode.PgUniqueConstraintViolation) {
       throw new UserExistsException(userDto.username);
@@ -98,10 +98,10 @@ public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto>
 //    */
 // public async createGuest(userDto: CreateUserRequestDto): Promise<UserResponseDto> {
 //   try {
-//     let userEntity = UserMapper.toCreateGuest(userDto);
+//     let userEntity = RigisterMapper.toCreateGuest(userDto);
 //     userEntity.password = await HashHelper.encrypt(userEntity.password);
-//     userEntity = await this.usersRepository.save(userEntity);
-//     return UserMapper.toDto(userEntity);
+//     userEntity = await this.rigisterRepository.save(userEntity);
+//     return RigisterMapper.toDto(userEntity);
 //   } catch (error) {
 //     if (error.code == DBErrorCode.PgUniqueConstraintViolation) {
 //       throw new UserExistsException(userDto.username);
@@ -129,15 +129,15 @@ public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto>
    * @returns {Promise<UserResponseDto>}
    */
   public async updateUser(id: string, userDto: UpdateUserRequestDto): Promise<UserResponseDto> {
-    let userEntity = await this.usersRepository.findOne(id);
+    let userEntity = await this.rigisterRepository.findOne(id);
     if (!userEntity) {
       throw new NotFoundException();
     }
 
     try {
-      userEntity = UserMapper.toUpdateEntity(userEntity, userDto);
-      userEntity = await this.usersRepository.save(userEntity);
-      return UserMapper.toDto(userEntity);
+      userEntity = RigisterMapper.tooUpdateEntity(userEntity, userDto);
+      userEntity = await this.rigisterRepository.save(userEntity);
+      return RigisterMapper.tooDto(userEntity);
     } catch (error) {
       if (error.code == DBErrorCode.PgUniqueConstraintViolation) {
         throw new UserExistsException(userDto.username);
@@ -165,7 +165,7 @@ public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto>
   public async changePassword(changePassword: ChangePasswordRequestDto, userId: string): Promise<UserResponseDto> {
     const { currentPassword, newPassword } = changePassword;
 
-    const userEntity = await this.usersRepository.findOne({ id: userId });
+    const userEntity = await this.rigisterRepository.findOne({ id: userId });
 
     if (!userEntity) {
       throw new NotFoundException();
@@ -179,8 +179,8 @@ public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto>
 
     try {
       userEntity.password = await HashHelper.encrypt(newPassword);
-      await this.usersRepository.save(userEntity);
-      return UserMapper.toDto(userEntity);
+      await this.rigisterRepository.save(userEntity);
+      return RigisterMapper.tooDto(userEntity);
     } catch (error) {
       if (error instanceof TimeoutError) {
         throw new RequestTimeoutException();
@@ -196,14 +196,14 @@ public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto>
    * @returns {Promise<void>}
    */
   public async deleteUser(id: string): Promise<void> {
-    const userEntity = await this.usersRepository.findOne(id);
+    const userEntity = await this.rigisterRepository.findOne(id);
 
     if (!userEntity) {
       throw new NotFoundException();
     }
 
     try {
-      await this.usersRepository.remove(userEntity);
+      await this.rigisterRepository.remove(userEntity);
     } catch (error) {
       if (error instanceof TimeoutError) {
         throw new RequestTimeoutException();
