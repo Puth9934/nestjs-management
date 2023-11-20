@@ -6,7 +6,6 @@ export class CreateUserStatusEnum1602340072549 implements MigrationInterface {
     await queryRunner.query(`
             CREATE TYPE ${status} AS ENUM (
                 'active',
-                'blocked',
                 'inactive'
             )
         `);

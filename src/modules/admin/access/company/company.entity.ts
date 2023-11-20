@@ -5,8 +5,8 @@ import { PermissionEntity } from '../permissions/permission.entity';
 
 @Entity({ schema: 'admin', name: 'company' })
 export class CompanyEntity extends BaseEntity {
-  @PrimaryColumn({ name: 'id', type: 'uuid', generated: 'uuid' })
-  id?: string;
+  @PrimaryGeneratedColumn({ name: 'id', type: 'integer'})
+  id: string;
 
 
   @Column({
@@ -35,12 +35,16 @@ export class CompanyEntity extends BaseEntity {
   companyDescription: string;
 
   @Column({
-    name: 'companyServiceDetails',
+    name: 'company_servcie_detail',
     type: 'varchar',
     nullable: false,
     length: 160,
   })
-  companyService: string;
+  companyServiceDetails: string;
+
+  // @Column({ type: 'text', nullable: true })
+  // companyServiceDetails: string;
+  
 
   @Column({
     name: 'companyAddress',
@@ -49,6 +53,7 @@ export class CompanyEntity extends BaseEntity {
     length: 160,
   })
   companyAddress: string;
+
   
 
   // constructor(permission?: Partial<CompanyEntity>) {

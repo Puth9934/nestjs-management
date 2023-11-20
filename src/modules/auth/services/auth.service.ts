@@ -35,9 +35,9 @@ export class AuthService {
     if (!passwordMatch) {
       throw new InvalidCredentialsException();
     }
-    if (user.status == UserStatus.Blocked) {
-      throw new DisabledUserException(ErrorType.BlockedUser);
-    }
+    // if (user.status == UserStatus.Blocked) {
+    //   throw new DisabledUserException(ErrorType.BlockedUser);
+    // }
     if (user.status == UserStatus.Inactive) {
       throw new DisabledUserException(ErrorType.InactiveUser);
     }

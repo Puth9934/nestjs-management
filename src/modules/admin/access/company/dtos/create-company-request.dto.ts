@@ -4,7 +4,8 @@ import { ApiProperty } from '@nestjs/swagger';
 const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
 export class CreateCompanyRequestDto {
   @IsNotEmpty()
-  @IsAlphanumeric()
+  // @IsAlphanumeric()
+  @MaxLength(100)
   @ApiProperty({
     example: 'ABA',
   })
@@ -29,7 +30,7 @@ export class CreateCompanyRequestDto {
   @ApiProperty({
     example: 'Your company service detail',
   })
-  companyService : string;
+  companyServiceDetails: string;
 
   @IsNotEmpty()
   @MaxLength(100)

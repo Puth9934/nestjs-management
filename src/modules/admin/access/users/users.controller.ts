@@ -34,7 +34,7 @@ export class UsersController {
   @ApiGlobalResponse(UserResponseDto)
   @Permissions('admin.access.users.read', 'admin.access.users.create', 'admin.access.users.update')
   @Get('/:id')
-  public getUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserResponseDto> {
+  public getUserById(@Param('id') id: number): Promise<UserResponseDto> {
     return this.usersService.getUserById(id);
   }
 
@@ -64,7 +64,7 @@ export class UsersController {
   @Permissions('admin.access.users.update')
   @Put('/:id')
   public updateUser(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: number,
     @Body(ValidationPipe) UserDto: UpdateUserRequestDto,
   ): Promise<UserResponseDto> {
     return this.usersService.updateUser(id, UserDto);
@@ -85,7 +85,8 @@ export class UsersController {
   * @returns {Promise<void>}
   */
  @Delete(':id')
- public async deleteUser(@Param('id') id: string): Promise<void> {
+ @Permissions('admin.access.users.delete')
+ public async deleteUser(@Param('id') id: number): Promise<void> {
    return this.usersService.deleteUser(id);
  }
 }

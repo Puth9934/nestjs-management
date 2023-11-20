@@ -1,13 +1,14 @@
-import { Entity, Column, ManyToMany, JoinTable, PrimaryColumn } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable, PrimaryColumn,PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '@database/entities';
 import { PermissionEntity } from '../permissions/permission.entity';
 import { RoleEntity } from '../roles/role.entity';
-import { UserStatus } from './user-status.enum';
+import { UserStatus, approveBy } from './user-status.enum';
+import { CompanyEntity } from '../company/company.entity';
 
 @Entity({ schema: 'admin', name: 'users' })
 export class UserEntity extends BaseEntity {
-  @PrimaryColumn({ name: 'id', type: 'uuid', generated: 'uuid' })
-  id?: string;
+  @PrimaryGeneratedColumn({ name: 'id', type: 'integer'})
+  id: string;
 
   @Column({
     name: 'username',
@@ -32,13 +33,13 @@ export class UserEntity extends BaseEntity {
   })
   lastName: string;
 
-  @Column({
-    name: 'company',
-    type: 'varchar',
-    length: 100,
-    nullable : false,
-  })
-  company: string;
+  // @Column({
+  //   name: 'companyId',
+  //   type: 'varchar',
+  //   length: 100,
+  //   nullable : false,
+  // })
+  // company: string;
 
   @Column({
     name: 'password',
@@ -64,11 +65,15 @@ export class UserEntity extends BaseEntity {
   status: UserStatus;
 
   @Column({
-    name: 'approveBy',
+    name: 'approveBy_Id',
     type: 'varchar',
+    enum: approveBy,
     nullable: false,
   })
-  approveBy: string;
+  approveBy: approveBy;
+
+  // @Column({name: 'parentId', type: 'uuid', generated: 'uuid' })
+  // parentId?: string;
 
   // @Column({
   //   name: 'isApproved',
@@ -76,13 +81,21 @@ export class UserEntity extends BaseEntity {
   //   nullable: false,
   // })
   // isApproved: boolean;
+  @Column({
+    name: 'companyId',
+    type: 'varchar',
+    nullable: false,
+  })
+  companyId: string;
 
-  // @Column({
-  //   name: 'parentId',
-  //   type: 'boolean',
-  //   nullable: false,
-  // })
-  // parentId: boolean;
+  @Column({
+    name: 'parentId',
+    type: 'varchar',
+    nullable: false,
+  })
+  parentId: string;
+
+
 
 
   @ManyToMany(() => RoleEntity, (role) => role.id, {

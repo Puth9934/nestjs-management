@@ -2,7 +2,7 @@ import { Entity, Column, ManyToMany, JoinTable, PrimaryColumn } from 'typeorm';
 import { BaseEntity } from '@database/entities';
 import { PermissionEntity } from '../permissions/permission.entity';
 import { RoleEntity } from '../roles/role.entity';
-import { UserStatus } from './user-status.enum';
+import { UserStatus, approveBy } from './user-status.enum';
 
 @Entity({ schema: 'Admin', name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -65,10 +65,11 @@ export class UserEntity extends BaseEntity {
 
   @Column({
     name: 'approveBy',
-    type: 'varchar',
+    type: 'enum',
+    enum: approveBy,
     nullable: false,
   })
-  approveBy: string;
+  approveBy: approveBy;
 
   // @Column({
   //   name: 'isApproved',

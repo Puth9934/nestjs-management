@@ -63,7 +63,7 @@ $ npm run seed
 - token: [`JWT <token_generated_on_login>`](http://localhost:8080/api/v1/swagger/#/Auth/AuthController_login)
 
 ## Users
-- username: `Admin` - password: `Hello123`
+- username: `Manager` - password: `Hello123`
 
 ## Features
 
@@ -105,9 +105,11 @@ src
 ├── modules
 │  ├── admin
 │  │  ├── access
+|  |  |  ├── company
 │  │  │  ├── permissions
 │  │  │  ├── roles
 │  │  │  ├── users
+|  |  |  ├── Register
 │  │  │  └── access.module.ts
 │  │  └── admin.module.ts    
 │  └── auth

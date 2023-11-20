@@ -15,10 +15,10 @@ export class createUsersPermissionsTable1610321090667 implements MigrationInterf
         columns: [
           {
             name: 'user_id',
-            type: 'uuid',
+            type: 'integer',
             isPrimary: true,
             isNullable: false,
-          },
+          },          
           {
             name: 'permission_id',
             type: 'integer',

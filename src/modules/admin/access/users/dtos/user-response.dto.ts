@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PermissionResponseDto } from '../../permissions/dtos';
 import { RoleResponseDto } from '../../roles/dtos';
-import { UserStatus } from '../user-status.enum';
+import { UserStatus, approveBy } from '../user-status.enum';
+import { CompanyResponseDto } from '../../company/dtos';
 
 export class UserResponseDto {
   @ApiProperty()
@@ -17,16 +18,13 @@ export class UserResponseDto {
   lastName: string;
   
   @ApiProperty()
-  company: string;
+  companyId: string;
 
   @ApiProperty()
-  approvedBy: string;
+  approvedBy: approveBy;
 
-  // @ApiProperty()
-  // isApproved: boolean;
-
-  // @ApiProperty()
-  // parentId: boolean;
+  @ApiProperty()
+  parentId: string;
 
   @ApiProperty({ type: [RoleResponseDto] })
   roles?: RoleResponseDto[];

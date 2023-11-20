@@ -11,7 +11,7 @@ export class createUsersRolesTable1610321079178 implements MigrationInterface {
         columns: [
           {
             name: 'user_id',
-            type: 'uuid',
+            type: 'integer',
             isPrimary: true,
             isNullable: false,
           },
@@ -43,6 +43,6 @@ export class createUsersRolesTable1610321079178 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     //If table has foreingn keys, third parameter must to be true
-    await queryRunner.dropTable(tableName, true, true);
+    await queryRunner.dropTable(tableName, true,true);
   }
 }

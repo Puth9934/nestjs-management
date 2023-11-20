@@ -11,9 +11,9 @@ export class createUsersTable1610321042350 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'integer',
             isPrimary: true,
-            generationStrategy: 'uuid',
+            // generationStrategy: 'integer',
             isGenerated: true,
             isNullable: false,
           },
@@ -42,7 +42,7 @@ export class createUsersTable1610321042350 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'company',
+            name: 'companyId',
             type: 'varchar',
             isNullable: false,
           },
@@ -58,7 +58,7 @@ export class createUsersTable1610321042350 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'approveBy',
+            name: 'approveBy_Id',
             type: 'varchar',
             isNullable: true,
           },
@@ -67,11 +67,11 @@ export class createUsersTable1610321042350 implements MigrationInterface {
           //   type:'boolean',
           //   isNullable: false,
           // },
-          // {
-          //   name: 'parentId',
-          //   type: 'boolean',
-          //   isNullable: false,
-          // },
+          {
+            name: 'parentId',
+            type: 'varchar',
+            isNullable: false,
+          },
           ...commonFields,
         ],
       }),

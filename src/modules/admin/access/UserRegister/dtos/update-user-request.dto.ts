@@ -1,6 +1,6 @@
 import { ArrayNotEmpty, IsAlphanumeric, IsArray, IsEnum, IsInt, IsNotEmpty, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserStatus } from '../user-status.enum';
+import { UserStatus, approveBy } from '../user-status.enum';
 
 export class UpdateUserRequestDto {
   @IsNotEmpty()
@@ -51,7 +51,7 @@ export class UpdateUserRequestDto {
 
   @MaxLength(100)
   @ApiProperty({
-    example: 'Manager',
+    example: approveBy.Admin,
   })
-  approveBy : string;
+  approveBy : approveBy;
 }

@@ -38,7 +38,7 @@ export class CompanyResponseDto {
     companyDescription: string;
     
     @ApiProperty()
-    companyService: string;
+    companyServiceDetails: string;
   
     @ApiProperty()
     companyAddress: string;

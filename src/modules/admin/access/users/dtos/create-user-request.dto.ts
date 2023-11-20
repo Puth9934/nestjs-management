@@ -23,14 +23,7 @@ export class CreateUserRequestDto {
     example: 'Doe',
   })
   lastName: string;
-
-  @IsNotEmpty()
-  @MaxLength(100)
-  @ApiProperty({
-    example: 'ABA',
-  })
-  company : string;
-
+  
   @Matches(passwordRegex, { message: 'Password too weak' })
   @IsNotEmpty()
   @IsAlphanumeric()
@@ -39,13 +32,20 @@ export class CreateUserRequestDto {
     example: 'Hello123',
   })
   password: string;
+  
+  @IsNotEmpty()
+  @MaxLength(100)
+  @ApiProperty({
+    example: 'Doe',
+  })
+  companyId: string;
 
-  // @IsNotEmpty()
+  @IsNotEmpty()
   @MaxLength(100)
   @ApiProperty({
     example: 'null',
   })
-  approveBy : string;
+  parentId : string;
 
   @ApiProperty({ example: [1, 2] })
   // @ArrayNotEmpty()

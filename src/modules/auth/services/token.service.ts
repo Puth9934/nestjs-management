@@ -80,9 +80,12 @@ export class TokenService {
     try {
       const { id } = this.jwtService.verify(token);
       const user = await this.usersRepository.findOne(id);
-      if (!user || user.status == UserStatus.Blocked || user.status == UserStatus.Inactive) {
+      if (!user || user.status == UserStatus.Inactive) {
         return { valid: false };
       }
+      // if (!user || user.status == UserStatus.Blocked || user.status == UserStatus.Inactive) {
+      //   return { valid: false };
+      // }
 
       return { valid: !!id };
     } catch (error) {

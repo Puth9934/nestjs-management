@@ -21,7 +21,7 @@ export class createCompanyTable1699600710385 implements MigrationInterface {
                     name: 'companyName',
                     type: 'varchar',
                     length: '20',
-                    // isUnique: true,
+                    isUnique: true,
                     isNullable: false,
                   },
                   {

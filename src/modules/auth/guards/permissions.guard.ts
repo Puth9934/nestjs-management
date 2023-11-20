@@ -35,7 +35,7 @@ export class PermissionsGuard implements CanActivate {
       const rolePermissions = permissions.map(({ slug }) => slug);
       allPermissions = allPermissions.concat(rolePermissions);
     });
-
+    
     return permissions.some((permission) => allPermissions?.includes(permission));
   }
 }

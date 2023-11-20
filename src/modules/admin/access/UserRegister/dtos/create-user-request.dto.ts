@@ -41,11 +41,11 @@ export class CreateUserRequestDto {
   password: string;
 
   // @IsNotEmpty()
-  @MaxLength(100)
-  @ApiProperty({
-    example: 'null',
-  })
-  approveBy : string;
+  // @MaxLength(100)
+  // @ApiProperty({
+  //   example: 'null',
+  // })
+  // approveBy : string;
 
   @ApiProperty({ example: [1, 2] })
   // @ArrayNotEmpty()

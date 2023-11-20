@@ -48,7 +48,7 @@ export class UsersService {
    * @param id {string}
    * @returns {Promise<UserResponseDto>}
    */
-  public async getUserById(id: string): Promise<UserResponseDto> {
+  public async getUserById(id: number): Promise<UserResponseDto> {
     const userEntity = await this.usersRepository.findOne(id, {
       relations: ['permissions', 'roles'],
     });
@@ -128,7 +128,7 @@ public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto>
    * @param userDto {UpdateUserRequestDto}
    * @returns {Promise<UserResponseDto>}
    */
-  public async updateUser(id: string, userDto: UpdateUserRequestDto): Promise<UserResponseDto> {
+  public async updateUser(id: number, userDto: UpdateUserRequestDto): Promise<UserResponseDto> {
     let userEntity = await this.usersRepository.findOne(id);
     if (!userEntity) {
       throw new NotFoundException();
@@ -195,7 +195,7 @@ public async createUser(userDto: CreateUserRequestDto): Promise<UserResponseDto>
    * @param id {string}
    * @returns {Promise<void>}
    */
-  public async deleteUser(id: string): Promise<void> {
+  public async deleteUser(id: number): Promise<void> {
     const userEntity = await this.usersRepository.findOne(id);
 
     if (!userEntity) {

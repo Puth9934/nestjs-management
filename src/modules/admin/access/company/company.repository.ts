@@ -9,9 +9,9 @@ export class CompanyRepository extends Repository<CompanyEntity> {
    * @param pagination {PaginationRequest}
    * @returns [userEntities: CompanyEntity[], totalUsers: number]
    */
-  public async getUsersAndCount(
+  public async getCompanyAndCount(
     pagination: PaginationRequest,
-  ): Promise<[userEntities: CompanyEntity[], totalUsers: number]> {
+  ): Promise<[companyEntities: CompanyEntity[], totalCompany: number]> {
     const {
       skip,
       limit: take,
@@ -19,8 +19,6 @@ export class CompanyRepository extends Repository<CompanyEntity> {
       params: { search },
     } = pagination;
     const query = this.createQueryBuilder('u')
-      .innerJoinAndSelect('u.roles', 'r')
-      .leftJoinAndSelect('u.permissions', 'p')
       .skip(skip)
       .take(take)
       .orderBy(order);
@@ -28,9 +26,8 @@ export class CompanyRepository extends Repository<CompanyEntity> {
     if (search) {
       query.where(
         `
-            u.username ILIKE :search
-            OR u.first_name ILIKE :search
-            OR u.last_name ILIKE :search
+            u.companyName ILIKE :search
+            OR u.companyDescription ILIKE :search
             `,
         { search: `%${search}%` },
       );
@@ -39,17 +36,13 @@ export class CompanyRepository extends Repository<CompanyEntity> {
     return query.getManyAndCount();
   }
 
-  /**
-   * find user by username
-   * @param username {string}
-   * @returns Promise<UserEntity>
+ /**
+   * Find company by ID with specified relations
+   * @param id {string}
+   * @param relations {string[]}
+   * @returns Promise<CompanyEntity>
    */
-  async findUserByUsername(username: string): Promise<CompanyEntity> {
-    return this.createQueryBuilder('u')
-      .leftJoinAndSelect('u.roles', 'r', 'r.active = true')
-      .leftJoinAndSelect('r.permissions', 'rp', 'rp.active = true')
-      .leftJoinAndSelect('u.permissions', 'p', 'p.active = true')
-      .where('u.username = :username', { username })
-      .getOne();
-  }
+ public async findCompanyById(id: string, relations: string[] = []): Promise<CompanyEntity | undefined> {
+  return this.findOne(id, { relations });
+}
 }

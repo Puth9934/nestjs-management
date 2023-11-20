@@ -23,13 +23,13 @@ export class UpdatecompanyRequestDto {
     example: 'Write about your company',
   })
   companyDescription: string;
-
+  
   @IsNotEmpty()
   @MaxLength(100)
   @ApiProperty({
     example:'Your company service details',
   })
-  companyService: string;
+  companyServiceDetails: string;
 
   // @ApiProperty({ example: [1, 2] })
   // @ArrayNotEmpty()

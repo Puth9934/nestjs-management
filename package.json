@@ -56,7 +56,8 @@
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.6.3",
     "typeorm": "^0.2.38",
-    "typeorm-seeding": "^1.6.1"
+    "typeorm-seeding": "^1.6.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

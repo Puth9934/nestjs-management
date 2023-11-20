@@ -32,9 +32,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (user.status == UserStatus.Inactive) {
       throw new DisabledUserException(ErrorType.InactiveUser);
     }
-    if (user.status == UserStatus.Blocked) {
-      throw new DisabledUserException(ErrorType.BlockedUser);
-    }
+    // if (user.status == UserStatus.Blocked) {
+    //   throw new DisabledUserException(ErrorType.BlockedUser);
+    // }
     return user;
   }
 }

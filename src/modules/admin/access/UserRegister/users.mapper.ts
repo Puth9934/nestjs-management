@@ -3,7 +3,7 @@ import { PermissionMapper } from '../permissions/permission.mapper';
 import { RoleEntity } from '../roles/role.entity';
 import { RoleMapper } from '../roles/role.mapper';
 import { CreateUserRequestDto, UserResponseDto, UpdateUserRequestDto } from './dtos';
-import { UserStatus } from './user-status.enum';
+import { UserStatus, approveBy } from './user-status.enum';
 import { UserEntity } from './user.entity';
 
 export class RigisterMapper {
@@ -21,7 +21,7 @@ export class RigisterMapper {
     return dto;
   }
 
-  public static async tooDtoWithRelations(entity: UserEntity): Promise<UserResponseDto> {
+  public static async toDtoWithRelations(entity: UserEntity): Promise<UserResponseDto> {
     const dto = new UserResponseDto();
 
     dto.id = entity.id;
@@ -37,7 +37,7 @@ export class RigisterMapper {
     return dto;
   }
 
-  public static tooCreateEntity(dto: CreateUserRequestDto): UserEntity {
+  public static toCreateEntity(dto: CreateUserRequestDto): UserEntity {
     const entity = new UserEntity();
     entity.username = dto.username;
     entity.firstName = dto.firstName;
@@ -46,9 +46,9 @@ export class RigisterMapper {
     entity.password = dto.password;
     entity.permissions = Promise.resolve(dto.permissions.map((id) => new PermissionEntity({ id })));
     entity.roles = Promise.resolve(dto.roles.map((id) => new RoleEntity({ id })));
-    entity.status = UserStatus.Blocked;
+    entity.status = UserStatus.Inactive;
     entity.isSuperUser = false;
-    entity.approveBy = dto.approveBy;
+    entity.approveBy = approveBy.Null;
     return entity;
   }
   // public static toCreateGuest(dto: CreateUserRequestDto): UserEntity {
@@ -66,7 +66,7 @@ export class RigisterMapper {
   //   return entity;
   // }
 
-  public static tooUpdateEntity(entity: UserEntity, dto: UpdateUserRequestDto): UserEntity {
+  public static toUpdateEntity(entity: UserEntity, dto: UpdateUserRequestDto): UserEntity {
     entity.username = dto.username;
     entity.firstName = dto.firstName;
     entity.lastName = dto.lastName;

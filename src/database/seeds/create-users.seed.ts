@@ -1,7 +1,7 @@
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection, In } from 'typeorm';
 import * as _ from 'lodash';
-import { UserStatus } from '../../modules/admin/access/users/user-status.enum';
+import { UserStatus, approveBy } from '../../modules/admin/access/users/user-status.enum';
 import { UserEntity } from '../../modules/admin/access/users/user.entity';
 import { RoleEntity } from '../../modules/admin/access/roles/role.entity';
 import { PermissionEntity } from '../../modules/admin/access/permissions/permission.entity';
@@ -12,12 +12,13 @@ const users = [
   {
     firstName: 'Manager',
     lastName: 'Manager',
-    company: 'BMW',
+    companyId: '1',
     password: 'Hello123',
     username: 'Manager',
     isSuperUser: true,
-    approveBy : 'Manager',
+    approveBy : approveBy.Manager,
     status: UserStatus.Active,
+    parentId: '1',
   },
 ];
 // const company= [
@@ -25,7 +26,7 @@ const users = [
 //   companyName: "BMW",
 //   companyLogo: "Jpg.png",
 //   companyDescription: "string",
-//   companyService: "string",
+//   companyServiceDetails: "string",
 //   companyAddress: "Phnom Penh",
 //   },
 // ];
@@ -34,6 +35,7 @@ const rolePermissions = {
     { slug: 'admin.access.users.read', description: 'Read users' },
     { slug: 'admin.access.users.create', description: 'Create users' },
     { slug: 'admin.access.users.update', description: 'Update users' },
+    { slug: 'admin.access.users.delete', description: 'Update users' },
     { slug: 'admin.access.roles.read', description: 'Read Roles' },
     { slug: 'admin.access.roles.create', description: 'Create Roles' },
     { slug: 'admin.access.roles.update', description: 'Update Roles' },
@@ -49,6 +51,7 @@ const rolePermissions = {
     { slug: 'admin.access.company.read', description: 'read company' },
     { slug: 'admin.access.company.create', description:'create company'},
     { slug: 'admin.access.company.update', description:'update company'},
+    { slug: 'admin.access.company.delete', description:'update delete'},
   ],
   Admin: [
     { slug: 'admin.access.users.read', description: 'Read users' },
@@ -109,7 +112,7 @@ export default class CreateUsersSeed implements Seeder {
     });
     const savedRoles = await connection.manager.save(roles);
     
-    //Creating users
+    // Creating users
     const entities = await Promise.all(
       users.map(async (u) => {
         const roles = Promise.resolve(savedRoles);
@@ -120,16 +123,17 @@ export default class CreateUsersSeed implements Seeder {
     );
     await connection.manager.save(entities);
 
-  //   //Creating company
-  //   const Company = await Promise.all(
-  //     company.map(async(c) => {        
-  //       // const password = await HashHelper.encrypt(u.password);
-  //       // const company = new CompanyEntity({ ...c });
-  //       return company;
-  //     }),
-  //   );
-    
-  //   await connection.manager.save(Company);
-  // }
+
+
+  //  // Creating company
+  //  const Company = await Promise.all(
+  //   company.map(async (u) => {
+  //     const company = new CompanyEntity(u);
+  //     return company;
+  //   }),
+  // );
+
+  // await connection.manager.save(Company);
+}
    
-}}
+}

@@ -12,7 +12,7 @@ export class CompanyMapper {
     dto.companyName = entity.companyName;
     dto.companyLogo = entity.companyLogo;
     dto.companyDescription = entity.companyDescription;
-    dto.companyService = entity.companyService;
+    dto.companyServiceDetails = entity.companyServiceDetails;
     dto.companyAddress = entity.companyAddress;
     return dto;
   }
@@ -23,10 +23,12 @@ export class CompanyMapper {
     dto.companyName = entity.companyName;
     dto.companyLogo = entity.companyLogo;
     dto.companyDescription = entity.companyDescription;
-    dto.companyService = entity.companyService;
-    // Consider uncommenting the following lines based on your application's structure
+    dto.companyServiceDetails = entity.companyServiceDetails;
+    
+    // Uncomment the following lines based on your application's structure
     // dto.permissions = await Promise.all((await entity.permissions).map(PermissionMapper.toDto));
     // dto.roles = await Promise.all((await entity.roles).map(RoleMapper.toDtoWithRelations));
+    
     dto.companyAddress = entity.companyAddress;
     return dto;
   }
@@ -36,7 +38,7 @@ export class CompanyMapper {
     entity.companyName = dto.companyName;
     entity.companyLogo = dto.companyLogo;
     entity.companyDescription = dto.companyDescription;
-    entity.companyService = dto.companyService;
+    entity.companyServiceDetails = dto.companyServiceDetails;
     entity.companyAddress = dto.companyAddress;
     // entity.permissions = Promise.resolve(dto.permissions.map((id) => new PermissionEntity({ id })));
     return entity;
@@ -46,7 +48,7 @@ export class CompanyMapper {
     entity.companyName = dto.companyName;
     entity.companyLogo = dto.companyLogo;
     entity.companyDescription = dto.companyDescription;
-    entity.companyService = dto.companyService;
+    entity.companyServiceDetails = dto.companyServiceDetails;
     entity.companyAddress = dto.companyAddress;
     return entity;
   }
